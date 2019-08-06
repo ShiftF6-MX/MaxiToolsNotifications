@@ -36,13 +36,13 @@ public class MainApp extends Application {
             return;
         }//FIN IF
 		
-        Image image = Toolkit.getDefaultToolkit().getImage("C:\\Users\\gran_\\eclipse-workspace\\ThreadTest\\F6_Icono.png");
+        Image image = Toolkit.getDefaultToolkit().getImage("resources\\F6_Icono.png");
         final PopupMenu popup = new PopupMenu();
         final TrayIcon trayIcon = new TrayIcon(image, "MaxiTools", popup);
         final SystemTray tray = SystemTray.getSystemTray();
         
         LeerArchivo.leerArchivo();
-		ConnectionDB conexionBD = new ConnectionDB("demomaxicomercior5","localhost", "root", "Simons83Mx");
+		ConnectionDB conexionBD = new ConnectionDB("maxicomercio","192.168.0.216", "conn01", "Simons83Mx");
 		Connection conexion = conexionBD.conectarMySQL();
         Requisicion requisicion = RequisicionDAO.readRequisicion(conexion, Integer.parseInt(args[0]));
         
