@@ -42,16 +42,17 @@ public class MainApp extends Application {
         final SystemTray tray = SystemTray.getSystemTray();
         
         LeerArchivo.leerArchivo();
-		ConnectionDB conexionBD = new ConnectionDB("maxicomercio","192.168.0.216", "conn01", "Simons83Mx");
+		ConnectionDB conexionBD = new ConnectionDB(LeerArchivo.nameDB, LeerArchivo.hostDB, LeerArchivo.userDB, LeerArchivo.passwordDB);
 		Connection conexion = conexionBD.conectarMySQL();
         Requisicion requisicion = RequisicionDAO.readRequisicion(conexion, Integer.parseInt(args[0]));
+        requisicion = RequisicionDAO.readDetalleRequisicion(conexion, requisicion);
         
-      	SessionMail sessionMail = new SessionMail("ingenieria@gruposhift-f6.com.mx", "smtp.ionos.mx", "9+tvpP%+5zs6", "587");
+      	SessionMail sessionMail = new SessionMail("requisiciones@maquinadosreyes.com.mx", "smtp.ionos.mx", "YcTf-Jk3H87K", "587");
       	Session session = sessionMail.iniciarSesionMail();
       	System.out.println(requisicion.getAsunto());
       	System.out.println(requisicion.getMensaje());
       	
-      	Mail.correorequisicion(session, "joel.grande@gruposhift-f6.com.mx", requisicion.getAsunto(), requisicion.getMensaje());
+      	Mail.correorequisicion(session, requisicion);
         
         MenuItem exitItem = new MenuItem(requisicion.getNombreRemitente());
         exitItem.addActionListener(new ActionListener() {
@@ -66,7 +67,7 @@ public class MainApp extends Application {
             tray.add(trayIcon);
         } catch (AWTException e) {
             System.out.println("TrayIcon could not be added.");
-        }
+        }//FIN TRY/CATCH
         
 		launch(args);
 	}//FIN METODO

@@ -7,15 +7,24 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import mx.shf6.notificacion.model.DetalleRequisicion;
+import mx.shf6.notificacion.model.Requisicion;
+
 public class Mail {
 	
 	//METODO PARA VALIDAR SI UN COORREO REGISTRADO ES VALIDO
-	public static boolean correorequisicion(Session session, String correoElectronico, String asunto, String mensajeRequisicion){
-		String mensaje = "<p><img src=\"http://app.canadevihidalgo.com.mx/assets/img/encabezado.png\"</img></p>"
-				+ "<font face=\"Roboto\" size=\"2\">Buen día,</font></strong>"
-				+ "<p><font face=\"Roboto\" size=\"2\">" + mensajeRequisicion + "</font></p>"
-				+ "<p><img src=\"http://app.canadevihidalgo.com.mx/assets/img/pie.png\"</img></p>";
-		boolean validacion = enviarCorreo(session, correoElectronico, asunto, mensaje);
+	public static boolean correorequisicion(Session session, Requisicion requisicion){
+		String detalleTextoRequisicion = "";
+		for (DetalleRequisicion detalleRequisicion : requisicion.getDetalleRequisicion())
+			detalleTextoRequisicion += detalleRequisicion.toString() + "<br>";
+				
+		String mensaje = "<p><img src=\"http://maquinadosreyes.com.mx/wp-content/uploads/2019/08/encabezado.png\"</img></p>"
+				+ "<font face=\"Roboto\" size=\"2\">Tienes una nueva requisición por aprobar,</font></strong>"
+				+ "<p><font face=\"Roboto\" size=\"2\">" + requisicion.getMensaje() + "</font></p>"
+				+ "<p><font face=\"Roboto\" size=\"2\">" + detalleTextoRequisicion + "</font></p>"
+				+ "<p><font face=\"Roboto\" size=\"2\">" + "Atte. " + requisicion.getNombreRemitente() + "</font></p>"
+				+ "<p><img src=\"http://maquinadosreyes.com.mx/wp-content/uploads/2019/08/pie.png\"</img></p>";
+		boolean validacion = enviarCorreo(session, requisicion.getCorreoDestinatario(), requisicion.getAsunto(), mensaje);
 		if (validacion==true) {
 			return true;
 		}else {
@@ -29,8 +38,9 @@ public class Mail {
 	    MimeMessage message = new MimeMessage(session);
 	    Transport transport=null;
 	    try {
-	        message.setFrom(new InternetAddress("ingenieria@gruposhift-f6.com.mx"));
+	        message.setFrom(new InternetAddress("requisiciones@maquinadosreyes.com.mx", "Sistema ERP - Requisiciones"));
 	        message.addRecipients(Message.RecipientType.TO, destinatario);   //Se podrían añadir varios de la misma manera
+	        message.addRecipients(Message.RecipientType.CC, "joel.grande@gruposhift-f6.com.mx"); 
 	        message.setSubject(asunto);
 	        //message.setText(mensaje);
 	        message.setContent(mensaje, "text/html");

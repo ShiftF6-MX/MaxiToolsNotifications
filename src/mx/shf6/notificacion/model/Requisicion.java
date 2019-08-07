@@ -1,5 +1,7 @@
 package mx.shf6.notificacion.model;
 
+import java.util.ArrayList;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,13 +19,14 @@ public class Requisicion {
 	private ObjectProperty<Integer> destinatarioFK;
 	private StringProperty asunto;
 	private StringProperty mensaje;
+	private ArrayList<DetalleRequisicion> detalleRequisicion;
 	
 	//CONSTRUCTORES
 	public Requisicion() {
-		this(0, "", "", 0, "", "", 0, "", "");
+		this(0, "", "", 0, "", "", 0, "", "", new ArrayList<DetalleRequisicion>());
 	}//FIN CONSTRUCTOR
 	
-	public Requisicion(Integer sysPK, String nombreRemitente, String correoRemitente, Integer remitenteFK, String nombreDestinatario, String correoDestinatario, Integer destinatarioFK, String asunto, String mensaje) {
+	public Requisicion(Integer sysPK, String nombreRemitente, String correoRemitente, Integer remitenteFK, String nombreDestinatario, String correoDestinatario, Integer destinatarioFK, String asunto, String mensaje, ArrayList<DetalleRequisicion> detalleRequisicion) {
 		this.sysPK = new SimpleObjectProperty<Integer>(sysPK);
 		this.nombreRemitente = new SimpleStringProperty(nombreRemitente);
 		this.correoRemitente = new SimpleStringProperty(correoRemitente);
@@ -33,6 +36,7 @@ public class Requisicion {
 		this.destinatarioFK = new SimpleObjectProperty<Integer>(destinatarioFK);
 		this.asunto = new SimpleStringProperty(asunto);
 		this.mensaje = new SimpleStringProperty(mensaje);
+		this.detalleRequisicion = detalleRequisicion;
 	}//FIN METODO
 	
 	public void setSysPK(Integer sysPK) {
@@ -142,4 +146,13 @@ public class Requisicion {
 	public StringProperty mensaje() {
 		return this.mensaje;
 	}//FIN METODO
-}//FIN METODO
+	
+	public void setDetalleVenta(ArrayList<DetalleRequisicion> detalleVenta) {
+		this.detalleRequisicion = detalleVenta;
+	}//FIN METODO
+	
+	public ArrayList<DetalleRequisicion> getDetalleRequisicion() {
+		return this.detalleRequisicion;
+	}//FIN METODO
+		
+}//FIN CLASE
