@@ -69,6 +69,7 @@ public class MainApp extends Application {
             System.out.println("TrayIcon could not be added.");
         }//FIN TRY/CATCH
         
+        System.exit(1);       
 		launch(args);
 	}//FIN METODO
 	
