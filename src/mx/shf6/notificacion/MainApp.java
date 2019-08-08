@@ -52,7 +52,7 @@ public class MainApp extends Application {
       	System.out.println(requisicion.getAsunto());
       	System.out.println(requisicion.getMensaje());
       	
-      	Mail.correorequisicion(session, requisicion);
+      	Mail.correorequisicion(session, requisicion, LeerArchivo.correoAutorizarCompras);
         
         MenuItem exitItem = new MenuItem(requisicion.getNombreRemitente());
         exitItem.addActionListener(new ActionListener() {

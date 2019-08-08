@@ -13,7 +13,7 @@ import mx.shf6.notificacion.model.Requisicion;
 public class Mail {
 	
 	//METODO PARA VALIDAR SI UN COORREO REGISTRADO ES VALIDO
-	public static boolean correorequisicion(Session session, Requisicion requisicion){
+	public static boolean correorequisicion(Session session, Requisicion requisicion, String correoAutorizarCompra){
 		String detalleTextoRequisicion = "";
 		for (DetalleRequisicion detalleRequisicion : requisicion.getDetalleRequisicion())
 			detalleTextoRequisicion += detalleRequisicion.toString() + "<br>";
@@ -24,7 +24,7 @@ public class Mail {
 				+ "<p><font face=\"Roboto\" size=\"2\">" + detalleTextoRequisicion + "</font></p>"
 				+ "<p><font face=\"Roboto\" size=\"2\">" + "Atte. " + requisicion.getNombreRemitente() + "</font></p>"
 				+ "<p><img src=\"http://maquinadosreyes.com.mx/wp-content/uploads/2019/08/pie.png\"</img></p>";
-		boolean validacion = enviarCorreo(session, requisicion.getCorreoDestinatario(), requisicion.getAsunto(), mensaje);
+		boolean validacion = enviarCorreo(session, requisicion.getCorreoDestinatario(), requisicion.getAsunto(), mensaje, correoAutorizarCompra);
 		if (validacion==true) {
 			return true;
 		}else {
@@ -34,13 +34,13 @@ public class Mail {
 	
 	
 	//METODO PARA ENVIAR CORREOS ELECTRONICOS
-	public static boolean enviarCorreo(Session session, String destinatario, String asunto, String mensaje) {		
+	public static boolean enviarCorreo(Session session, String destinatario, String asunto, String mensaje, String correoAutorizarCompra) {		
 	    MimeMessage message = new MimeMessage(session);
 	    Transport transport=null;
 	    try {
 	        message.setFrom(new InternetAddress("requisiciones@maquinadosreyes.com.mx", "Sistema ERP - Requisiciones"));
 	        message.addRecipients(Message.RecipientType.TO, destinatario);   //Se podrían añadir varios de la misma manera
-	        message.addRecipients(Message.RecipientType.CC, "hector.jimenez@maquinadosreyes.com.mx"); 
+	        message.addRecipients(Message.RecipientType.CC, correoAutorizarCompra); 
 	        message.setSubject(asunto);
 	        //message.setText(mensaje);
 	        message.setContent(mensaje, "text/html");

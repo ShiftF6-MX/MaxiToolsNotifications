@@ -16,6 +16,7 @@ public class LeerArchivo {
     public static String userDB;
     public static String passwordDB;
     public static String claveEquipo;
+    public static String correoAutorizarCompras;
     
     public static void leerArchivo(){
         try {
@@ -25,6 +26,7 @@ public class LeerArchivo {
             LeerArchivo.hostDB = content.get(4);
             LeerArchivo.userDB = content.get(6);
             LeerArchivo.passwordDB = content.get(8);
+            LeerArchivo.correoAutorizarCompras = content.get(10);
         } catch (IOException | IndexOutOfBoundsException ioe) {
             System.out.println(ioe.toString());
         }//END TRY/CATCH
