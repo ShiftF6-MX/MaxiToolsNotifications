@@ -40,7 +40,7 @@ public class Mail {
 	    try {
 	        message.setFrom(new InternetAddress("requisiciones@maquinadosreyes.com.mx", "Sistema ERP - Requisiciones"));
 	        message.addRecipients(Message.RecipientType.TO, destinatario);   //Se podrían añadir varios de la misma manera
-	        message.addRecipients(Message.RecipientType.CC, "joel.grande@gruposhift-f6.com.mx"); 
+	        message.addRecipients(Message.RecipientType.CC, "hector.jimenez@maquinadosreyes.com.mx"); 
 	        message.setSubject(asunto);
 	        //message.setText(mensaje);
 	        message.setContent(mensaje, "text/html");
