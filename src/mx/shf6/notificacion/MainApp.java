@@ -47,7 +47,7 @@ public class MainApp extends Application {
         Requisicion requisicion = RequisicionDAO.readRequisicion(conexion, Integer.parseInt(args[0]));
         requisicion = RequisicionDAO.readDetalleRequisicion(conexion, requisicion);
         
-      	SessionMail sessionMail = new SessionMail("requisiciones@maquinadosreyes.com.mx", "smtp.ionos.mx", "YcTf-Jk3H87K", "587");
+      	SessionMail sessionMail = new SessionMail(LeerArchivo.correoRequisiciones, "smtp.ionos.mx", LeerArchivo.contrasenaRequisiciones, "587");
       	Session session = sessionMail.iniciarSesionMail();
       	System.out.println(requisicion.getAsunto());
       	System.out.println(requisicion.getMensaje());
